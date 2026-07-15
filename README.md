@@ -23,7 +23,20 @@ Welcome to your second brain! This is a full-stack application that lets you tak
 - **AI Chat**: Ask questions about your notes. The system performs a vector similarity search in PostgreSQL and feeds the relevant context to a Groq-powered LLM.
 - **Secure**: Authentication is handled by Clerk, ensuring user data isolation.
 
-## Setup Instructions
+## Running the App
+
+You can run this application using Docker Compose or via a manual local setup.
+
+### Option 1: Docker Compose
+
+1. Install Docker and Docker Compose.
+2. Fill out `.env` files in both `backend/` and `frontend/` directories (see `.env.example` in each).
+3. Build and run:
+   ```bash
+   docker-compose up --build
+   ```
+
+### Option 2: Manual Setup
 
 ### 1. Prerequisites
 - Node.js (v18+)
