@@ -36,10 +36,12 @@ def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(securit
             signing_key.key,
             algorithms=["RS256"],
             issuer=CLERK_ISSUER_URL,
-            options={"verify_aud": False}
+            options={"verify_aud": False},
+            leeway=60
         )
         return data.get("sub")
     except Exception as e:
+        print(f"Auth error: {e}")
         raise HTTPException(
             status_code=status.HTTP_401_UNAUTHORIZED,
             detail="Invalid authentication credentials",
