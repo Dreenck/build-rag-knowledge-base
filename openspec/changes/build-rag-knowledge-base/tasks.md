@@ -36,5 +36,5 @@
 
 ## 6. Testing
 
-- [ ] 6.1 Backend unit tests (pytest, mocking DB and LLM)
-- [ ] 6.2 Frontend unit tests (Vitest, mocking Clerk and API)
+- [x] 6.1 Backend unit tests (pytest, mocking DB and LLM)
+- [x] 6.2 Frontend unit tests (Vitest, mocking Clerk and API)

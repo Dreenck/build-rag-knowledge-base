@@ -14,6 +14,11 @@ class MockDB:
     def all(self):
         return []
     def add(self, instance):
+        from datetime import datetime
+        if hasattr(instance, 'created_at') and getattr(instance, 'created_at') is None:
+            instance.created_at = datetime.utcnow()
+        if hasattr(instance, 'updated_at') and getattr(instance, 'updated_at') is None:
+            instance.updated_at = datetime.utcnow()
         self.added.append(instance)
     def commit(self):
         pass
