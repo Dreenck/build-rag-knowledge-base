@@ -5,3 +5,9 @@ alembic
 psycopg2-binary
 pydantic
 pydantic-settings
+python-dotenv
+PyJWT
+cryptography
+sentence-transformers
+groq
+pgvector
