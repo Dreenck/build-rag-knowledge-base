@@ -17,7 +17,7 @@ vi.mock('@clerk/clerk-react', () => {
 
 describe('App Component', () => {
   beforeEach(() => {
-    global.fetch = vi.fn((url) => {
+    globalThis.fetch = vi.fn((url) => {
       if (url === '/api/notes' || url === '/api/chat/history') {
         return Promise.resolve({
           ok: true,
