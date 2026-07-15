@@ -178,7 +178,7 @@ def chat(message: ChatMessageCreate, user_id: str = Depends(get_current_user), d
     else:
         try:
             completion = groq_client.chat.completions.create(
-                model="llama3-8b-8192",
+                model="llama-3.1-8b-instant",
                 messages=[
                     {"role": "system", "content": system_prompt},
                     {"role": "user", "content": message.content}

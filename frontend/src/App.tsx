@@ -1,4 +1,4 @@
-import { SignedIn, SignedOut, SignInButton, UserButton, useAuth } from "@clerk/clerk-react";
+import { SignedIn, SignedOut, SignIn, UserButton, useAuth } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 
 function App() {
@@ -9,9 +9,7 @@ function App() {
         <h1 className="text-2xl font-bold tracking-tight text-white">RAG Knowledge Base</h1>
         <div>
           <SignedOut>
-            <SignInButton mode="modal">
-              <button className="bg-blue-600 hover:bg-blue-700 text-white px-4 py-2 rounded-md font-medium transition-colors">Sign In</button>
-            </SignInButton>
+            <div className="text-xl font-medium text-neutral-400">Welcome</div>
           </SignedOut>
           <SignedIn>
             <div className="flex items-center space-x-6">
@@ -27,9 +25,17 @@ function App() {
 
       <main>
         <SignedOut>
-          <div className="text-center py-20">
-            <h2 className="text-4xl font-bold mb-4 text-white">Welcome to your second brain</h2>
-            <p className="text-neutral-400 text-lg mb-8 max-w-xl mx-auto">Sign in to start creating markdown notes and querying them using AI.</p>
+          <div className="flex flex-col md:flex-row items-center justify-center gap-12 py-10">
+            <div className="text-center md:text-left max-w-md">
+              <h2 className="text-4xl md:text-5xl font-bold mb-6 text-white leading-tight">Welcome to your second brain</h2>
+              <p className="text-neutral-400 text-lg mb-8">Sign in to start creating markdown notes, building your knowledge base, and querying it instantly using AI.</p>
+              <div className="hidden md:block opacity-20">
+                <svg xmlns="http://www.w3.org/2000/svg" width="120" height="120" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1" strokeLinecap="round" strokeLinejoin="round"><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/></svg>
+              </div>
+            </div>
+            <div className="w-full max-w-md flex justify-center">
+              <SignIn routing="hash" />
+            </div>
           </div>
         </SignedOut>
         
@@ -42,8 +48,7 @@ function App() {
 }
 
 function NotesApp() {
-  // ponytail: keeping everything in one file for maximum simplicity.
-  const { getToken } = useAuth();
+  const { getToken, isLoaded, isSignedIn } = useAuth();
   const [notes, setNotes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [title, setTitle] = useState("Untitled");
@@ -71,8 +76,12 @@ function NotesApp() {
   };
 
   useEffect(() => {
-    fetchNotes();
-  }, []);
+    if (isLoaded && isSignedIn) {
+      fetchNotes();
+    } else if (isLoaded && !isSignedIn) {
+      setLoading(false);
+    }
+  }, [isLoaded, isSignedIn]);
 
   const saveNote = async () => {
     if (!content.trim()) return;
