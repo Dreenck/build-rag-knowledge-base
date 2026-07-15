@@ -204,6 +204,14 @@ def get_chat_history(user_id: str = Depends(get_current_user), db = Depends(get_
     messages = db.query(ChatMessage).filter(ChatMessage.session_id == session.id).order_by(ChatMessage.created_at.asc()).all()
     return [{"role": m.role, "content": m.content} for m in messages]
 
+@app.delete("/api/chat/history")
+def clear_chat_history(user_id: str = Depends(get_current_user), db = Depends(get_db)):
+    session = db.query(ChatSession).filter(ChatSession.user_id == user_id).first()
+    if session:
+        db.query(ChatMessage).filter(ChatMessage.session_id == session.id).delete()
+        db.commit()
+    return {"status": "ok"}
+
 
 
 @app.delete("/api/notes/{note_id}")

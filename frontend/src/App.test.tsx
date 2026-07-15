@@ -7,10 +7,12 @@ vi.mock('@clerk/clerk-react', () => {
   return {
     SignedIn: ({ children }: any) => <>{children}</>,
     SignedOut: ({ children }: any) => <>{children}</>,
-    SignInButton: ({ children }: any) => <>{children}</>,
+    SignIn: () => <div>Sign In</div>,
     UserButton: () => <div>User</div>,
     useAuth: () => ({
       getToken: vi.fn(() => Promise.resolve('mock-token')),
+      isLoaded: true,
+      isSignedIn: true,
     }),
   };
 });

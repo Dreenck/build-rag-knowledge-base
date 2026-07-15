@@ -1,6 +1,13 @@
-# RAG Knowledge Base
+# RAG Knowledge Base 🧠
 
-A simple, fast, and intelligent "second brain" note-taking application powered by **Retrieval-Augmented Generation (RAG)**. Create markdown notes and instantly ask an AI questions about your personal knowledge base.
+Welcome to your second brain! This is a full-stack application that lets you take markdown notes and instantly chat with them using an AI (LLM) powered by Retrieval-Augmented Generation (RAG).
+
+## Screenshots
+
+<div align="center">
+  <img src="docs/notes.png" alt="Notes UI" width="45%" />
+  <img src="docs/chat.png" alt="Chat UI" width="45%" />
+</div>
 
 ## Tech Stack
 
