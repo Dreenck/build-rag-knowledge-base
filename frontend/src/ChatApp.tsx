@@ -2,6 +2,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 
 export default function ChatApp() {
+  const API_BASE = import.meta.env.VITE_API_URL || "";
   const { getToken } = useAuth();
   const [messages, setMessages] = useState<any[]>([]);
   const [input, setInput] = useState("");
@@ -11,7 +12,7 @@ export default function ChatApp() {
     const fetchHistory = async () => {
       const token = await getToken();
       if (!token) return;
-      const res = await fetch('/api/chat/history', { headers: { Authorization: `Bearer ${token}` } });
+      const res = await fetch(`${API_BASE}/api/chat/history`, { headers: { Authorization: `Bearer ${token}` } });
       if (res.ok) {
         setMessages(await res.json());
       }
@@ -30,7 +31,7 @@ export default function ChatApp() {
 
     try {
       const token = await getToken();
-      const res = await fetch('/api/chat', {
+      const res = await fetch(`${API_BASE}/api/chat`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
         body: JSON.stringify({ content: userMsg })
@@ -49,7 +50,7 @@ export default function ChatApp() {
   const clearChat = async () => {
     try {
       const token = await getToken();
-      await fetch('/api/chat/history', {
+      await fetch(`${API_BASE}/api/chat/history`, {
         method: 'DELETE',
         headers: { Authorization: `Bearer ${token}` }
       });

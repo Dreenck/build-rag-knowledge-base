@@ -2,6 +2,7 @@ import { useAuth } from "@clerk/clerk-react";
 import { useState, useEffect } from "react";
 
 export default function NotesApp() {
+  const API_BASE = import.meta.env.VITE_API_URL || "";
   const { getToken, isLoaded, isSignedIn } = useAuth();
   const [notes, setNotes] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
@@ -13,11 +14,11 @@ export default function NotesApp() {
     try {
       const token = await getToken();
       if (!token) return;
-      await fetch('/api/sync-user', {
+      await fetch(`${API_BASE}/api/sync-user`, {
         method: 'POST',
         headers: { Authorization: `Bearer ${token}` }
       });
-      const res = await fetch('/api/notes', {
+      const res = await fetch(`${API_BASE}/api/notes`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       if (res.ok) {
@@ -41,7 +42,7 @@ export default function NotesApp() {
   const saveNote = async () => {
     if (!content.trim()) return;
     const token = await getToken();
-    const url = editingId ? `/api/notes/${editingId}` : '/api/notes';
+    const url = editingId ? `${API_BASE}/api/notes/${editingId}` : `${API_BASE}/api/notes`;
     const method = editingId ? 'PUT' : 'POST';
     
     await fetch(url, {
@@ -61,7 +62,7 @@ export default function NotesApp() {
 
   const deleteNote = async (id: string) => {
     const token = await getToken();
-    await fetch(`/api/notes/${id}`, {
+    await fetch(`${API_BASE}/api/notes/${id}`, {
       method: 'DELETE',
       headers: { Authorization: `Bearer ${token}` }
     });
